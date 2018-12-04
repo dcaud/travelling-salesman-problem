@@ -63,6 +63,7 @@ addresses <- addresses %>%
 # Calculate the travel times between addresses by using the gmapdistance command from the gmapdistance package.
 # For gmapdistance to access the Google Maps API, register a API key, from Google's free trail at https://developers.google.com/maps/documentation/javascript/get-api-key
 #
+set.api.key <- KEY
 times <- gmapsdistance(origin = addresses$latlon,
                        destination = addresses$latlon,
                        combinations = "all",
