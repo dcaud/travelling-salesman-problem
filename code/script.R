@@ -1,37 +1,21 @@
 # Author: Marinus Louw
 # Original Author: Andrew B. Collier <andrew@exegetic.biz> | @datawookie
 # Link to original article: https://datawookie.netlify.com/blog/2018/05/travelling-salesman-with-ggmap/
+# Citations: D. Kahle and H. Wickham. ggmap: Spatial Visualization with ggplot2. The R Journal, 5(1), 144-161.
+# URL http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf
 
 # DATA SETUP ========================================================================================================
 
 # Google Maps API key
-KEY = "AIzaSy......."
+KEY = "AIzaSy..."
 
-ADDRESSES = c(
+addresses = c(
   "115 St Andrews Dr, Durban North, 4051, South Africa",
   "67 Boshoff St, Pietermaritzburg, 3201, South Africa",
   "4 Paul Ave, Fairview, Empangeni, 3880, South Africa",
   "166 Kerk St, Vryheid, 3100, South Africa",
   "9 Margaret St, Ixopo, 3276, South Africa",
   "16 Poort road, Ladysmith, 3370, South Africa"
-)
-
-LAT = c(
-  "-29.77875",
-  "-29.59541",
-  "-28.75786",
-  "-27.76920",
-  "-30.15413",
-  "-28.55747"
-)
-
-LON = c(
-  "31.04351",
-  "30.37992",
-  "31.90200",
-  "30.79068",
-  "30.05867",
-  "29.77289"
 )
 
 # LIBRARIES =========================================================================================================
@@ -44,14 +28,21 @@ load_pkg("gmapsdistance",
          "ggplot2"
 )
 
-# ATAFRAME =========================================================================================================
+# GEOCODING =======================================================================================================
 
-addresses <- tibble(
-  address = ADDRESSES,
-  lat = LAT,
-  lon = LON
-)
+# Assign the Google Maps API key to the ggmap package
+set.api.key(KEY)
 
+# Create a dataframe of addresses for use in the geocode command
+df <- data.frame(addresses,
+                 stringsAsFactors = FALSE)
+
+# Use the dplyr package's pipe operator to add the latitude and longitude of the addresses to your dataframe
+addresses <- tbl_df(df) %>% mutate_geocode(addresses)
+
+# DATAFRAME =========================================================================================================
+
+# Add latlon and latlonggmap columns for use in the gmapdistance and ggmap packages, respectively, later
 addresses <- addresses %>%
   mutate(latlon = sprintf("%s+%s", lat, lon)) %>%
   mutate(latlonggmap = sprintf("%s,%s", lat, lon)) %>%
@@ -63,7 +54,6 @@ addresses <- addresses %>%
 # Calculate the travel times between addresses by using the gmapdistance command from the gmapdistance package.
 # For gmapdistance to access the Google Maps API, register a API key, from Google's free trail at https://developers.google.com/maps/documentation/javascript/get-api-key
 #
-set.api.key <- KEY
 times <- gmapsdistance(origin = addresses$latlon,
                        destination = addresses$latlon,
                        combinations = "all",
@@ -140,4 +130,3 @@ ggmap(map) +
              size = 3, 
              alpha = 0.75) +
   labs(x = "Longitude", y = "Latitude")
-
