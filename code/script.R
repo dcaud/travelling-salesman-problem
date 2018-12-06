@@ -7,7 +7,7 @@
 # DATA SETUP ========================================================================================================
 
 # Google Maps API key
-KEY = "AIzaSyBAutX6RtprPhGaCoNYYt0lis3gWKD74as"
+KEY = "AIzaSy...."
 
 addresses = c(
   "115 St Andrews Dr, Durban North, 4051, South Africa",
