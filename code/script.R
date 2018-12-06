@@ -7,7 +7,7 @@
 # DATA SETUP ========================================================================================================
 
 # Google Maps API key
-KEY = "AIzaSy...."
+KEY = "AIzaSyBAutX6RtprPhGaCoNYYt0lis3gWKD74as"
 
 addresses = c(
   "115 St Andrews Dr, Durban North, 4051, South Africa",
@@ -28,7 +28,7 @@ library(ggplot2)
 
 # GEOCODING =======================================================================================================
 
-# Assign the Google Maps API key
+# Assign the Google Maps API key to the gmapdistance and ggmap packages, respectively
 set.api.key(KEY)
 register_google(key = KEY)
 
@@ -112,6 +112,7 @@ route <- route %>% bind_rows()
 
 # MAP ROUTE =========================================================================================================
 
+# Use the ggmap package to create a map of the optimal route
 map <- get_map(location = c(lon = mean(route$lon), lat = mean(route$lat)), zoom = 7, maptype = "roadmap")
 
 addresses[[3]] <- as.numeric(addresses[[3]])
