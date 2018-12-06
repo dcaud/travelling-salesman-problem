@@ -7,7 +7,7 @@
 # DATA SETUP ========================================================================================================
 
 # Google Maps API key
-KEY = "AIzaSy..."
+KEY = "AIzaSy...."
 
 addresses = c(
   "115 St Andrews Dr, Durban North, 4051, South Africa",
@@ -28,8 +28,9 @@ library(ggplot2)
 
 # GEOCODING =======================================================================================================
 
-# Assign the Google Maps API key to the ggmap package
+# Assign the Google Maps API key
 set.api.key(KEY)
+register_google(key = KEY)
 
 # Create a dataframe of addresses for use in the geocode command
 df <- data.frame(addresses,
@@ -102,7 +103,6 @@ addresses <- addresses[tour_order,]
 # BUILD ROUTE =======================================================================================================
 
 # Use ggmap's route command to build the route
-register_google(key = KEY)
 route <- lapply(seq(nrow(addresses) - 1), function(n) {
   route(addresses$latlonggmap[n], addresses$latlonggmap[n+1], structure = "route") %>%
     mutate(section = n)
