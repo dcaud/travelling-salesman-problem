@@ -28,7 +28,7 @@ library(ggplot2)
 
 # GEOCODING =======================================================================================================
 
-# Assign the Google Maps API key to the gmapdistance and ggmap packages, respectively
+# Assign the Google Maps API key to the gmapsdistance and ggmap packages, respectively
 set.api.key(KEY)
 register_google(key = KEY)
 
@@ -41,7 +41,7 @@ addresses <- tbl_df(df) %>% mutate_geocode(addresses)
 
 # DATAFRAME =========================================================================================================
 
-# Add latlon and latlonggmap columns for use in the gmapdistance and ggmap packages, respectively, later
+# Add latlon and latlonggmap columns for use in the gmapsdistance and ggmap packages, respectively, later
 addresses <- addresses %>%
   mutate(latlon = sprintf("%s+%s", lat, lon)) %>%
   mutate(latlonggmap = sprintf("%s,%s", lat, lon)) %>%
