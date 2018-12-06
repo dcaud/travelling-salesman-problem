@@ -20,13 +20,11 @@ addresses = c(
 
 # LIBRARIES =========================================================================================================
 
-library(rmsfuns)
-load_pkg("gmapsdistance", 
-         "dplyr", 
-         "ggmap", 
-         "TSP", 
-         "ggplot2"
-)
+library(gmapsdistance)
+library(dplyr)
+library(ggmap)
+library(TSP)
+library(ggplot2)
 
 # GEOCODING =======================================================================================================
 
