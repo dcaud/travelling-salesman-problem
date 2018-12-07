@@ -37,7 +37,9 @@ df <- data.frame(addresses,
                  stringsAsFactors = FALSE)
 
 # Use the dplyr package's pipe operator to add the latitude and longitude of the addresses to your dataframe
-addresses <- tbl_df(df) %>% mutate_geocode(addresses)
+# In the geocode command below I set the source to DSK, which makes use of OpenStreetMap. 
+# One can also use the default source, Google, but working with Google's API key can sometimes be a headache.
+addresses <- tbl_df(df) %>% mutate_geocode(addresses, source = "dsk")
 
 # DATAFRAME =========================================================================================================
 
